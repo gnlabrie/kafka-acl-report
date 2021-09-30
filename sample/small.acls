@@ -1,0 +1,20 @@
+Current ACLs for resource `ResourcePattern(resourceType=TOPIC, name=topic1, patternType=LITERAL)`:
+        (principal=User:username1, host=*, operation=WRITE, permissionType=ALLOW)
+        (principal=User:username1, host=*, operation=READ, permissionType=ALLOW)
+
+Current ACLs for resource `ResourcePattern(resourceType=TOPIC, name=topic2, patternType=LITERAL)`:
+        (principal=User:username2, host=*, operation=WRITE, permissionType=ALLOW)
+        (principal=User:username2, host=*, operation=READ, permissionType=ALLOW)
+
+Current ACLs for resource `ResourcePattern(resourceType=TOPIC, name=topic3, patternType=PREFIXED)`:
+        (principal=User:username3, host=*, operation=READ, permissionType=ALLOW)
+        (principal=User:username3, host=*, operation=WRITE, permissionType=ALLOW)
+        (principal=User:username4, host=*, operation=WRITE, permissionType=ALLOW)
+        (principal=User:username4, host=*, operation=READ, permissionType=ALLOW)
+
+Current ACLs for resource `ResourcePattern(resourceType=GROUP, name=group1, patternType=PREFIXED)`:
+        (principal=User:username5, host=*, operation=ALL, permissionType=ALLOW)
+        (principal=User:username6, host=*, operation=ALL, permissionType=ALLOW)
+
+Current ACLs for resource `ResourcePattern(resourceType=GROUP, name=group2, patternType=LITERAL)`:
+        (principal=User:username1, host=*, operation=ALL, permissionType=ALLOW)
