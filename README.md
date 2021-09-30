@@ -163,9 +163,7 @@ Project Link: [https://github.com/gnlabrie/kafka-acl-report](https://github.com/
 ## Donation
 If you like the tool and want to support the code, you can pay me a coke ...
 
-<a href="https://www.paypal.com/donate?business=XPAD6SVHRHTP2&no_recurring=0&currency_code=CAD" target=”_blank”><img src="https://github.com/gnlabrie/kafka-acl-manager/blob/main/images/donate.png" align="left" height="10%" width="10%"></a>
-
-
+<a href="https://www.paypal.com/donate?business=XPAD6SVHRHTP2&no_recurring=0&currency_code=CAD" target=”_blank”><img src="https://github.com/gnlabrie/kafka-acl-report/blob/main/images/donate.png" align="left" height="10%" width="10%"></a>
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
