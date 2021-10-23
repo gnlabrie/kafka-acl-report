@@ -7,14 +7,14 @@ source ${APPPATH}/functions.sh
 
 declare -A arrayUser
 # ----------------------------------------------------------------------------
-function reportByUser {
+function reportByPrincipal {
   debug 5 "Entering function reportTopic"
-  user=$1
-  var1=${arrayUser[$user]}
-  debug 3 "User=${user} ==> [${var1}]"
+  principal=$1
+  var1=${arrayUser[$principal]}
+  debug 3 "User=${principal} ==> [${var1}]"
   set -f
   entry=(${var1//:/ })
-  echo "The ACL for USER ${user} are ... "
+  echo "The ACL for USER ${principal} are ... "
   for K in "${!entry[@]}"; do
     debug 5 "$K --- ${entry[$K]}"
     aclEntry=(${entry[$K]//;/ })
@@ -25,7 +25,7 @@ function reportByUser {
   debug 5 "Exiting function reportTopic"
 }
 # ----------------------------------------------------------------------------
-function getUser {
+function getPrincipal {
   debug 5 "Entering function getTopic"
   #
   ### fnInput="${APPPATH}/../sample/small.acls"
@@ -44,7 +44,7 @@ function getUser {
     # --------------------------------------------------------------------------------------------
     # Matching Principal ACLs
     #         (principal=User:fidapp-it-sams-uat, host=*, operation=WRITE, permissionType=ALLOW)
-#   pattern='.*\(principal=User:(.*),\ +host=(.*),\ +operation=(.*),\ +permisssionType=(.*)\)'
+    #   pattern='.*\(principal=User:(.*),\ +host=(.*),\ +operation=(.*),\ +permisssionType=(.*)\)'
     pattern='.*\(principal=User:(.*),\ +host=(.*),\ +operation=(.*),\ +permissionType=(.*)\)'
     if [[ $line =~ ${pattern} ]]; then
       aclPrincipal=${BASH_REMATCH[1]}
@@ -68,14 +68,21 @@ function getUser {
 }
 # ----------------------------------------------------------------------------
 
-usage() { echo "Usage: $0 -u <user> [-f <filename> | STDIN]" 1>&2; sleep 5; exit 1; }
+usage() {
+  echo "Usage: $0 -p <principal> [-f <filename> ]" 1>&2
+  echo " -p <principal>       (mandatory) The PRINCIPAL (case sensitive) you are looking to report on" 1>&2
+  echo " -f <filenmame>       (optional)  A file containing the output of the kafka-acls command" 1>&2
+  echo "                                  If filename is not present, the script will read from STDIN" 1>&2
+  sleep 5
+  exit 1
+}
 
 # ----------------------------------------------------------------------------
 # Parse and validate commandline arguments
-while getopts "f:u:h" o; do
+while getopts "f:p:h" o; do
     case "${o}" in
-        u)
-            optUser=${OPTARG}
+        p)
+            optPrincipal=${OPTARG}
             ;;
         f)
             optFn=${OPTARG}
@@ -94,19 +101,17 @@ while getopts "f:u:h" o; do
 done
 shift $((OPTIND-1))
 
-#if [ -z "${optUser}" ] && [ -z "${optGroup}" ]; then
-if [ -z "${optUser}" ]; then
-    echo "[ERROR] Missing \"-u <username>\". Exit"
+if [ -z "${optPrincipal}" ]; then
+    echo "[ERROR] Missing \"-u <principalname>\". Exit"
     usage
 fi
 
-debug 5 "Commandline arguments optUser = [${optUser}]"
+debug 5 "Commandline arguments optPrincipal = [${optPrincipal}]"
 # ----------------------------------------------------------------------------
-if [ ! -z "${optUser}" ]; then
+if [ ! -z "${optPrincipal}" ]; then
   debug 5 "Calling getTopic"
-  getUser
-  reportByUser ${optUser}
+  getPrincipal
+  reportByPrincipal ${optPrincipal}
 fi
 
 debug 5 "Script complete. Exiting."
-
