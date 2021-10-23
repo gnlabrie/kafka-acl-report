@@ -31,6 +31,7 @@
   <a href="https://github.com/gnlabrie/kafka-acl-report">
     <img src="images/logo.png" alt="Logo" width="80" height="80">
   </a>
+</p>
 <-->
   <h3 align="center">Kafka ACL Report</h3>
 
@@ -46,7 +47,6 @@
     ·
     <a href="https://github.com/gnlabrie/kafka-acl-report/issues">Request Feature</a>
   </p>
-</p>
 
 <!-- TABLE OF CONTENTS -->
 <details open="open">
