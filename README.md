@@ -26,11 +26,12 @@
 
 <!-- PROJECT LOGO -->
 <br />
+<!--
 <p align="center">
   <a href="https://github.com/gnlabrie/kafka-acl-report">
     <img src="images/logo.png" alt="Logo" width="80" height="80">
   </a>
-
+<-->
   <h3 align="center">Kafka ACL Report</h3>
 
   <p align="center">
@@ -78,12 +79,9 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
+Apache Kafka ACL lack a mean to provide a mean to list ACLs associated to a Principal with kafka-acls commands ([KIP-357](https://cwiki.apache.org/confluence/display/KAFKA/KIP-357%3A++Add+support+to+list+ACLs+per+principal)) 
 
-Here's a blank template to get started:
-**To avoid retyping too much info. Do a search and replace with your text editor for the following:**
-`gnlabrie`, `kafka-acl-report`, `twitter_handle`, `email`, `project_title`, `project_description`
-
+The **_kafka-acl-report.sh_** provide a temporary solution for now.
 
 ### Built With
 
@@ -96,28 +94,83 @@ To get a local copy up and running follow these simple steps.
 
 ### Prerequisites
 
-This is an example of how to list things you need to use the software and how to install them.
 * Linux bash
+* kafka-acls.sh or kafka-acls - if to be executed through shell pipe 
+* Ouput of kafka-acls.sh or kafka-acls - if using a filename or STDIN (with cat <filename>)
 
 ### Installation
 
-1. Clone the repo
-   ```sh
-   git clone https://github.com/gnlabrie/kafka-acl-report.git
-   ```
+1. Clone the repo to the location of your choice
+```sh
+cd <clone-parent-path-dir>
+git clone https://github.com/gnlabrie/kafka-acl-report.git
+```
 
+2. Check the executable permission of the script
+```sh
+cd <clone-parent-path-dir>/kafka-acl-report
+ls -la bin/kafka-acl-report.sh
+```
+Script should have - at least - the executable permission for the owner.
+````shell
+-rwxr-xr-x 1 labri 197609 4277 Sep 30 03:05 kafka-acl-report.sh
+````
 <!-- USAGE EXAMPLES -->
 ## Usage
 
+The kafka-acl-report.sh script is taking a principal as input and either a filename or reading STDIN
+```shell
+Usage: kafka-acl-report.sh -p <principal> [ -f <filename> ]
+ -p <principal>       (mandatory) The PRINCIPAL (case sensitive) you are looking to report on
+ -f <filenmame>       (optional)  A file containing the output of the kafka-acls command
+                                  If filename is not present, the script will read from STDIN
+```
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
+### Show usage
+```sh
+cd <clone-parent-path-dir>/kafka-acl-report
+./kafka-acl-report/bin/kafka-acl-report.sh -h
+```
 
-1. Execute to get usage
-   ```sh
-   <installion path>/kafka-acl-report/bin/kafka-acl-report.sh -h
-   ```
+### Example from sample directory
 
-_For more examples, please refer to the [Documentation](https://example.com)_
+#### Principal with GROUP ACLs (**_username1_**)
+```sh
+cd <clone-parent-path-dir>/kafka-acl-report
+cat ../sample/small.acls | ./kafka-acl-report/bin/kafka-acl-report.sh -u username1
+The ACL for USER username1 are ...
+   On GROUP group2 (LITERAL) has ALL ALLOW from HOST *
+```
+
+#### Principal with READ (LITERAL) ACLs on a TOPIC (**_username2_**)
+```sh
+cd <clone-parent-path-dir>/kafka-acl-report
+cat ../sample/small.acls | ./kafka-acl-report/bin/kafka-acl-report.sh -u username2
+The ACL for USER username2 are ...
+   On TOPIC topic2 (LITERAL) has READ ALLOW from HOST *
+```
+
+#### Principal with WRITE (PREFIXED) ACLs on a TOPIC (**_username3_**)
+```sh
+cd <clone-parent-path-dir>/kafka-acl-report
+cat ../sample/small.acls | ./kafka-acl-report/bin/kafka-acl-report.sh -u username3
+The ACL for USER username3 are ...
+   On TOPIC topic3 (PREFIXED) has WRITE ALLOW from HOST *
+```
+
+#### Principal with READ (PREFIXED) ACLs on a TOPIC (**_username4_**)
+```sh
+cd <clone-parent-path-dir>/kafka-acl-report
+cat ../sample/small.acls | ./kafka-acl-report/bin/kafka-acl-report.sh -u username4
+The ACL for USER username4 are ...
+   On TOPIC topic3 (PREFIXED) has WRITE ALLOW from HOST *
+```
+#### Principal with no ACLs found (**_username_**)
+```sh
+cd <clone-parent-path-dir>/kafka-acl-report
+cat ../sample/small.acls | ./kafka-acl-report/bin/kafka-acl-report.sh -u username
+The ACL for USER username are ...
+```
 
 
 <!-- ROADMAP -->
@@ -141,16 +194,12 @@ Contributions are what make the open source community such an amazing place to l
 
 Distributed under the MIT License. See [`LICENSE`](https://github.com/gnlabrie/kafka-acl-report/blob/master/LICENSE) for more information.
 
-
-
 <!-- CONTACT -->
 ## Contact
 
-Name: [Guy Labrie](mailto:guy.labrie@cgsc.ca?subject=[GitHub]%20Source%20Han%20Sans)
-
-Project Link: [https://github.com/gnlabrie/kafka-acl-report](https://github.com/gnlabrie/kafka-acl-report)
-
-
+* Name : Guy Labrie
+* Email: [guy.labrie@cgsc.ca](mailto:guy.labrie@cgsc.ca?subject=[GitHub]%20Source%20Han%20Sans)
+* Project Link: [https://github.com/gnlabrie/kafka-acl-report](https://github.com/gnlabrie/kafka-acl-report)
 
 <!-- ACKNOWLEDGEMENTS -->
 ## Acknowledgements
@@ -158,7 +207,6 @@ Project Link: [https://github.com/gnlabrie/kafka-acl-report](https://github.com/
 * []()
 * []()
 * []()
-
 
 ## Donation
 If you like the tool and want to support the code, you can pay me a coke ...
