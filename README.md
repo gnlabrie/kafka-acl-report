@@ -96,7 +96,7 @@ To get a local copy up and running follow these simple steps.
 
 * Linux bash
 * kafka-acls.sh or kafka-acls - if to be executed through shell pipe 
-* Ouput of kafka-acls.sh or kafka-acls - if using a filename or STDIN (with cat <filename>)
+* Output of kafka-acls.sh or kafka-acls - if using a filename or STDIN (with cat <filename>)
 
 ### Installation
 
@@ -113,7 +113,7 @@ ls -la bin/kafka-acl-report.sh
 ```
 Script should have - at least - the executable permission for the owner.
 ````shell
--rwxr-xr-x 1 labri 197609 4277 Sep 30 03:05 kafka-acl-report.sh
+-rwxr-xr-x 1 user 197609 4277 Sep 30 03:05 kafka-acl-report.sh
 ````
 <!-- USAGE EXAMPLES -->
 ## Usage
@@ -122,7 +122,7 @@ The kafka-acl-report.sh script is taking a principal as input and either a filen
 ```shell
 Usage: kafka-acl-report.sh -p <principal> [ -f <filename> ]
  -p <principal>       (mandatory) The PRINCIPAL (case sensitive) you are looking to report on
- -f <filenmame>       (optional)  A file containing the output of the kafka-acls command
+ -f <filename>       (optional)  A file containing the output of the kafka-acls command
                                   If filename is not present, the script will read from STDIN
 ```
 
